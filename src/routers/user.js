@@ -35,32 +35,22 @@ router.post('/users/logout', auth, async (req, res) => {
         res.send()
     } catch (e) {
         res.status(500).send()
-
     }
-
 })
 
-
 router.post('/users/logoutAll', auth, async (req, res) => {
-    
     try {
         req.user.tokens = []
         await req.user.save()
-
         res.send()
     } catch (e) {
         res.status(500).send()
-
     }
-
 })
-
 
 router.get('/users/me', auth, async (req, res) => {
     res.send(req.user)
 })
-
-
 
 router.patch('/users/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
@@ -72,14 +62,8 @@ router.patch('/users/me', auth, async (req, res) => {
     }
 
     try {
-
         updates.forEach((update) => req.user[update] = req.body[update])
         await req.user.save()
-
-        if (!req.user) {
-            return res.status(404).send()
-        }
-
         res.send(req.user)
     } catch (e) {
         res.status(400).send(e)
@@ -88,7 +72,6 @@ router.patch('/users/me', auth, async (req, res) => {
 
 router.delete('/users/me', auth, async (req, res) => {
     try {
-        
         await req.user.remove()
         res.send(req.user)
     } catch (e) {
